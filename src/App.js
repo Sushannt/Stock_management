@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 //pages
 import Dashboard from "./pages/Dashbaord";
@@ -12,8 +12,9 @@ const App = () => {
   return (
     <div>
       <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/" element={<Login />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </div>
