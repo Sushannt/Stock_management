@@ -1,15 +1,18 @@
-import { Col, Form, Button } from "react-bootstrap";
+import { Col, Form, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import loginSchema from "../helper/formValidation";
+import { toast } from "react-hot-toast";
 
-// toast
-import { toast } from "react-toastify";
+//form validation
+import loginSchema from "../helper/formValidation";
 
 import axios from "axios";
 import { LOGIN_URL } from "../constants";
+import { useState } from "react";
+
 const FormComponent = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm({
@@ -18,12 +21,14 @@ const FormComponent = () => {
 
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       const response = await axios.post(LOGIN_URL, data);
       console.log(response);
-      navigate('/dashboard');
-      toast.success("Login Successfully")
+      navigate("/dashboard");
     } catch (error) {
       toast.error("Something went wrong, please try again");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,16 +54,15 @@ const FormComponent = () => {
           className="border border-dark-subtle"
         />
       </Form.Group>
-     <Button
+      <Button
         type="submit"
         variant="primary"
         className="w-100 mt-4 py-2"
         size="lg"
         onClick={handleSubmit(onSubmit)}
       >
-        Log in
+        {isLoading ? <Spinner animation="border" /> : "Log In"}
       </Button>
-     
     </Form>
   );
 };
