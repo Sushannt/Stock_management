@@ -1,3 +1,6 @@
+import { useContext, useState } from "react";
+import { FormContext } from "../context/FormContext";
+
 import { Col, Form, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -9,9 +12,9 @@ import loginSchema from "../helper/formValidation";
 
 import axios from "axios";
 import { LOGIN_URL } from "../constants";
-import { useState } from "react";
 
 const FormComponent = () => {
+  const { userInfo, setUserInfo } = useContext(FormContext);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -19,11 +22,13 @@ const FormComponent = () => {
     resolver: yupResolver(loginSchema),
   });
 
+  console.log("userInfo-before", userInfo);
+
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      const response = await axios.post(LOGIN_URL, data);
-      console.log(response);
+      const { data: userData } = await axios.post(LOGIN_URL, data);
+      setUserInfo(userData);
       navigate("/dashboard");
     } catch (error) {
       toast.error("Something went wrong, please try again");
