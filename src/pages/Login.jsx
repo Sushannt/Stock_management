@@ -1,6 +1,6 @@
 import { Row, Col, Container, Image } from "react-bootstrap";
-import warehouseImg from "../image/vecteezy_flat-isometric-illustration-concept-warehouse-and-delivery_7885573.jpg"
-import keyImg from "../image/key-minimalistic-square-2-svgrepo-com.svg"
+import warehouseImg from "../image/vecteezy_flat-isometric-illustration-concept-warehouse-and-delivery_7885573.jpg";
+import keyImg from "../image/key-minimalistic-square-2-svgrepo-com.svg";
 import nagarNigam from "../image/nagar-nigam.jpg";
 
 // components
