@@ -22,12 +22,20 @@ const FormComponent = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  console.log("userInfo-before", userInfo);
+  const setTokenInLocalStorage = (token) => {
+    localStorage.setItem('token', token);
+  };
+  
+  
 
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
       const { data: userData } = await axios.post(LOGIN_URL, data);
+      console.log(userData);
+      const token = userData.result.token;
+      setTokenInLocalStorage(token); // Call the function to set the token in localStorage
+      console.log('Login successful. Token saved in localStorage:', token);
       setUserInfo(userData);
       navigate("/dashboard");
     } catch (error) {
