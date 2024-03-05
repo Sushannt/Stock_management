@@ -14,7 +14,7 @@ import axios from "axios";
 import { LOGIN_URL } from "../constants";
 
 const FormComponent = () => {
-  const { userInfo, setUserInfo } = useContext(FormContext);
+  const { setUserInfo } = useContext(FormContext);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -22,20 +22,18 @@ const FormComponent = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  const setTokenInLocalStorage = (token) => {
-    localStorage.setItem('token', token);
-  };
-  
-  
+  // const setTokenInLocalStorage = (token) => {
+  //   localStorage.setItem("token", token);
+  // };
 
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
       const { data: userData } = await axios.post(LOGIN_URL, data);
-      console.log(userData);
-      const token = userData.result.token;
-      setTokenInLocalStorage(token); // Call the function to set the token in localStorage
-      console.log('Login successful. Token saved in localStorage:', token);
+      // console.log(userData);
+      // const token = userData.result.token;
+      // setTokenInLocalStorage(token); // Call the function to set the token in localStorage
+      // console.log("Login successful. Token saved in localStorage:", token);
       setUserInfo(userData);
       navigate("/dashboard");
     } catch (error) {

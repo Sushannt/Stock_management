@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { ADD_ROLE } from "../../constants";
 import axios from "axios";
+import { FormContext } from "../../context/FormContext";
 
 const Role = () => {
+  const { userInfo } = useContext(FormContext);
+
   const [data, setData] = useState([]);
   const [id, setId] = useState(0);
   const [isUpdate, setIsUpdate] = useState(false);
@@ -19,7 +22,8 @@ const Role = () => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("token");
+      // const token = localStorage.getItem("token");
+      const token = userInfo.result.token;
       const response = await axios.post(
         ADD_ROLE,
         {
@@ -32,7 +36,7 @@ const Role = () => {
         }
       );
       setData([...data, response.data]);
-     console.log(response)
+      console.log(response);
       toast.success("Role saved successfully");
       setShow(false);
     } catch (error) {
