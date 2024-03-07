@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FormContext } from "../context/FormContext";
+import { AuthContext } from "../context/AuthContext";
 
 import { Col, Form, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import axios from "axios";
 import { LOGIN_URL } from "../constants";
 
 const FormComponent = () => {
-  const { setUserInfo } = useContext(FormContext);
+  const { setUserInfo } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
