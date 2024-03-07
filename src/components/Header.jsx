@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import logo from '../image/logo.png'
+ import logo from '../image/nagar-nigam.jpg'
 function Header() {
   return (
     <div className="dashboard-header bg-light" style={{ zIndex: 10 }}>
       <nav className="navbar navbar-expand-lg bg-light-gray fixed-top">
-        {/* <img src={logo} width={50} className='m-l-20'/> */}
+       
         <Link to="/dashboard" className="navbar-brand">
-          STACK
+        <img src={logo} width={50} className='m-l-20'/>
         </Link>
         <button
           className="navbar-toggler"
