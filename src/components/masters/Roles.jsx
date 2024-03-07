@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { MasterContext } from "../../context/MasterContext";
 // import { Modal, Button } from "react-bootstrap";
-import { GET_ROLES, ADD_ROLE, UPDATE_ROLE } from "../../constants";
+import { GET_ROLES, ADD_ROLE, UPDATE_ROLE, DELETE_ROLE } from "../../constants";
 import { AuthContext } from "../../context/AuthContext";
 import MasterContainer from "../MasterContainer";
 
@@ -88,7 +88,6 @@ const Roles = () => {
   };
 
   //update role
-
   const handelUpdate = async () => {
     try {
       const response = await axios.post(
@@ -109,7 +108,30 @@ const Roles = () => {
     }
   };
 
-  const handelDelete = async (id) => {};
+  const handelDelete = async (id, name) => {
+    try {
+      const { data } = await axios.post(
+        DELETE_ROLE,
+        {
+          roleId: id,
+          roleName: name,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
+          },
+        }
+      );
+
+      if (data?.isSuccess) {
+        toast.success("Role Deleted Successfully");
+      }
+      setShow(false);
+    } catch (error) {
+      console.error(error);
+      toast.error("Error deleting role");
+    }
+  };
 
   return (
     <MasterContainer
@@ -158,7 +180,7 @@ const Roles = () => {
                     className="delete"
                     title="Delete"
                     data-toggle="tooltip"
-                    onClick={() => handelDelete(item.id)}
+                    onClick={() => handelDelete(item.id, item.name)}
                     style={{ color: "red" }}
                   >
                     <i className="material-icons">&#xE872;</i>
