@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-import { Col, Form, Button, Spinner } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -22,11 +22,8 @@ const FormComponent = () => {
     resolver: yupResolver(loginSchema),
   });
 
- 
-
   const onSubmit = async (data) => {
     try {
-      console.log(data);
       setIsLoading(true);
       const { data: userData } = await axios.post(LOGIN_URL, data);
       if (userData?.isSuccess) {
@@ -43,23 +40,23 @@ const FormComponent = () => {
   };
 
   return (
-    <Form as={Col} className="col-xs-12 col-md-8">
-      <Form.Group className="my-3 w-100" controlId="exampleForm.ControlInput1">
+    <Form>
+      <Form.Group className="my-4" controlId="exampleForm.ControlInput1">
         <Form.Label>Enter Username</Form.Label>
         <Form.Control
           {...register("username")}
           type="text"
-          size="lg"
+          size="md"
           placeholder="username"
           className="border border-dark-subtle"
         />
       </Form.Group>
-      <Form.Group className="my-3 w-100" controlId="exampleForm.ControlInput2">
+      <Form.Group className="my-4" controlId="exampleForm.ControlInput2">
         <Form.Label>Enter Password</Form.Label>
         <Form.Control
           {...register("password")}
           type="password"
-          size="lg"
+          size="md"
           placeholder="password"
           className="border border-dark-subtle"
         />
@@ -67,8 +64,8 @@ const FormComponent = () => {
       <Button
         type="submit"
         variant="primary"
-        className="w-100 mt-4 py-2"
-        size="lg"
+        className="w-100 mt-3 pb-2"
+        size="md"
         onClick={handleSubmit(onSubmit)}
       >
         {isLoading ? <Spinner animation="border" /> : "Log In"}

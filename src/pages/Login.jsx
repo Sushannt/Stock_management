@@ -1,8 +1,7 @@
 import { Row, Col, Container, Image } from "react-bootstrap";
 import warehouseImg from "../image/vecteezy_flat-isometric-illustration-concept-warehouse-and-delivery_7885573.jpg";
 import keyImg from "../image/key-minimalistic-square-2-svgrepo-com.svg";
-import nagarNigam from "../image/nagar-nigam.jpg";
-
+import nagarNigam from "../image/nagarpalika.png";
 // components
 import FormComponent from "../components/FormComponent";
 
@@ -17,20 +16,24 @@ const Login = () => {
           <Col
             xs={12}
             md={5}
-            className="d-flex flex-column  align-items-center align-items-md-start my-auto"
+            className="d-flex flex-column  align-items-center align-items-md-start justify-content-center"
           >
-            <div className="shadow-lg px-4 px-md-3  py-5  border border-subtle-dark rounded-2 d-flex flex-column align-items-center">
+            <div className="shadow-lg px-4 px-md-3  pt-2 pb-5  border border-subtle-dark rounded-2 d-flex flex-column w-75">
               <Image
                 src={keyImg}
-                width={40}
+                width={30}
                 style={{
-                  marginBottom: "3rem",
+                  marginBottom: "4rem",
                   color: "black",
                   alignSelf: "flex-start",
                 }}
               />
-              <Image src={nagarNigam} fluid className="w-25" />
-              <h1 className="mb-xs-3 mb-md-5 mt-2">Login</h1>
+              <Image
+                src={nagarNigam}
+                fluid
+                className="w-75 align-self-center "
+              />
+              <h1 className="mb-xs-3 mb-md-3 mt-2 text-center">Login</h1>
               <FormComponent />
             </div>
           </Col>
