@@ -27,6 +27,10 @@ const MasterContainer = ({
     handleShow,
     handleClose,
   } = useContext(MasterContext);
+
+  const handleOnChange = (e) => {
+    setState(e.target.value);
+  };
   return (
     <div className="container">
       <div className="crud shadow-lg border mb-5 mt-3 p-4 rounded ">
@@ -89,7 +93,7 @@ const MasterContainer = ({
                       type="text"
                       className="form-control"
                       placeholder={`Enter ${text} name`}
-                      onChange={(e) => setState(e.target.value)}
+                      onChange={handleOnChange}
                       value={state}
                       readOnly={isReadOnly}
                     />
