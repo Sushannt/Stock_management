@@ -7,6 +7,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
 import { MasterContextProvider } from "./context/MasterContext";
 
+//protect route
+import ProtectRoute from "./components/ProtectRoute";
+
 //pages
 import Dashboard from "./pages/Dashbaord";
 import Login from "./pages/Login";
@@ -18,9 +21,11 @@ const App = () => {
       <MasterContextProvider>
         <div>
           <Routes>
-            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="" element={<ProtectRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
             <Route path="*" element={<Error404 />} />
           </Routes>
         </div>
