@@ -978,7 +978,8 @@ Borders
 }
 
 .text-warning {
-    bcolor: #ffc108 !important;
+    
+    color: #ffc108 !important;
 }
 
 .text-info {

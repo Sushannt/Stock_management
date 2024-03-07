@@ -8,8 +8,6 @@ import { FormContext } from "../../context/FormContext";
 
 const Role = () => {
   const { userInfo } = useContext(FormContext);
-
-  // const token = localStorage.getItem("token");
   const token = userInfo?.result?.token;
 
   const [data, setData] = useState([]);
@@ -18,6 +16,8 @@ const Role = () => {
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [roleName, setRoleName] = useState("");
   const [show, setShow] = useState(false);
+
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -42,6 +42,8 @@ const Role = () => {
     getRoles();
   }, [token, data]);
 
+
+  //create role
   const handleSave = async (e) => {
     e.preventDefault();
     try {
@@ -52,12 +54,12 @@ const Role = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
           },
         }
       );
-      setData([...data, response.data]);
-      console.log(response);
+      setData([...data, response.data.result.roleName]);
+      console.log("response...", response.data.result.roleName);
       toast.success("Role saved successfully");
       setShow(false);
     } catch (error) {
@@ -77,6 +79,7 @@ const Role = () => {
     }
   };
 
+
   const handleEdit = (id) => {
     const role = data.find((item) => item.id === id);
     if (role) {
@@ -88,24 +91,32 @@ const Role = () => {
     }
   };
 
-  const handelUpdate = async (id) => {
+  //update role
+
+  const handelUpdate = async () => {
     try {
-      const { data } = await axios.post({ id, roleName }, UPDATE_ROLE, {
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
-        },
-      });
-      console.log(data);
+      const response = await axios.post(
+        UPDATE_ROLE,
+        { roleId:id, roleName },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
+          },
+        }
+      );
+      console.log(response.data);
+      toast.success("Role updated successfully");
+      setShow(false);
     } catch (error) {
-      toast.error("Error Updating Role");
-      console.log(error);
+      console.error("Error updating role:", error);
+      toast.error("Error updating role");
     }
   };
 
   const handelDelete = async (id) => {};
 
   return (
-    <div className="container" style={{ zIndex: 0 }}>
+    <div className="container-sm" style={{ zIndex: 0 }}>
       <div className="crud shadow-lg border mb-5 mt-3 p-4 rounded ">
         <div className="row">
           <div className="col-sm-3 mt-5 mb-4 text-gred">
@@ -122,7 +133,7 @@ const Role = () => {
           </div>
           <div
             className="col-sm-3 offset-sm-2 mt-5 mb-4 text-gred"
-            style={{ color: "green" }}
+            style={{ color: "green"}}
           >
             <h2>
               <b>Role Details</b>
@@ -150,7 +161,7 @@ const Role = () => {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{item.name} </td>
-                      <td className="d-flex justify-content-around align-items-center">
+                      <td className="d-flex justify-content-center align-items-center">
                         <Link
                           to="#"
                           className="view"
@@ -161,7 +172,6 @@ const Role = () => {
                         >
                           <i className="material-icons">&#xE417;</i>
                         </Link>
-                        {/* &nbsp; */}
                         <Link
                           to="#"
                           className="edit"
@@ -171,7 +181,6 @@ const Role = () => {
                         >
                           <i className="material-icons">&#xE254;</i>
                         </Link>
-                        {/* &nbsp; */}
                         <Link
                           to="#"
                           className="delete"
