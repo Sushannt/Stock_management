@@ -12,7 +12,9 @@ const Dashboard = () => {
       <div>
         <Sidebar />
       </div>
-      <div>{Outlet}</div>
+      <div>
+        <Outlet />
+      </div>
     </div>
   );
 };
