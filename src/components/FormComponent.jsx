@@ -28,14 +28,20 @@ const FormComponent = () => {
 
   const onSubmit = async (data) => {
     try {
+      console.log(data);
       setIsLoading(true);
       const { data: userData } = await axios.post(LOGIN_URL, data);
       // console.log(userData);
       // const token = userData.result.token;
       // setTokenInLocalStorage(token); // Call the function to set the token in localStorage
       // console.log("Login successful. Token saved in localStorage:", token);
-      setUserInfo(userData);
-      navigate("/dashboard");
+
+      if (userData?.isSuccess) {
+        setUserInfo(userData);
+        navigate("/dashboard");
+      } else {
+        toast.error(userData?.errorMessage);
+      }
     } catch (error) {
       toast.error("Something went wrong, please try again");
     } finally {
