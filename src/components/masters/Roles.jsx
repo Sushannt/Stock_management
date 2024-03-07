@@ -1,10 +1,8 @@
 import { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
-// import MasterContainer from "../MasterContainer";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { MasterContext } from "../../context/MasterContext";
-// import { Modal, Button } from "react-bootstrap";
 import { GET_ROLES, ADD_ROLE, UPDATE_ROLE, DELETE_ROLE } from "../../constants";
 import { AuthContext } from "../../context/AuthContext";
 import MasterContainer from "../MasterContainer";

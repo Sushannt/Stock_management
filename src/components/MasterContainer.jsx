@@ -41,7 +41,7 @@ const MasterContainer = ({
                 <input
                   className="form-control mr-sm-2"
                   type="search"
-                  placeholder="Search Role.."
+                  placeholder={`Search ${text}...`}
                   aria-label="Search"
                 />
               </form>
@@ -76,7 +76,7 @@ const MasterContainer = ({
             <Modal.Header closeButton>
               {!isUpdate ? (
                 <Modal.Title>
-                  {isReadOnly ? "Role Details" : "Create Role"}
+                  {isReadOnly ? `${text} details` : `Create ${text}`}
                 </Modal.Title>
               ) : (
                 <Modal.Title>Edit {text}</Modal.Title>
