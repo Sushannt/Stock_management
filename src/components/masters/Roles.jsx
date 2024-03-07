@@ -1,13 +1,16 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { ADD_ROLE } from "../../constants";
+import { ADD_ROLE, GET_ROLES, UPDATE_ROLE } from "../../constants";
 import axios from "axios";
 import { FormContext } from "../../context/FormContext";
 
 const Role = () => {
   const { userInfo } = useContext(FormContext);
+
+  // const token = localStorage.getItem("token");
+  const token = userInfo?.result?.token;
 
   const [data, setData] = useState([]);
   const [id, setId] = useState(0);
@@ -19,11 +22,29 @@ const Role = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //getting roles from the api
+  useEffect(() => {
+    const getRoles = async () => {
+      try {
+        const { data: response } = await axios.get(GET_ROLES, {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IlRlc3RfVXNlcjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0MkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTcxMDEzNjc3NywiaXNzIjoiSldUQXV0aGVudGljYXRpb25TZXJ2ZXIiLCJhdWQiOiJKV1RTZXJ2aWNlUG9zdG1hbkNsaWVudCJ9.9Wy45JEuXHYlvF7dThp5uhIJGcrspcP27103x5H_ubk`,
+          },
+        });
+
+        setData(response.result);
+      } catch (error) {
+        toast.error("Error fetching roles");
+        console.log(error);
+      }
+    };
+
+    getRoles();
+  }, [token, data]);
+
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      // const token = localStorage.getItem("token");
-      const token = userInfo.result.token;
       const response = await axios.post(
         ADD_ROLE,
         {
@@ -49,7 +70,7 @@ const Role = () => {
     const role = data.find((item) => item.id === id);
     if (role) {
       setId(id);
-      setRoleName(role.role);
+      setRoleName(role.name);
       setIsReadOnly(true);
       setIsUpdate(false);
       handleShow();
@@ -60,19 +81,31 @@ const Role = () => {
     const role = data.find((item) => item.id === id);
     if (role) {
       setId(id);
-      setRoleName(role.role);
+      setRoleName(role.name);
       setIsReadOnly(false);
       setIsUpdate(true);
       handleShow();
     }
   };
 
-  const handelUpdate = async (id) => {};
+  const handelUpdate = async (id) => {
+    try {
+      const { data } = await axios.post({ id, roleName }, UPDATE_ROLE, {
+        headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IlRlc3RfVXNlcjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0MkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTcxMDEzNjc3NywiaXNzIjoiSldUQXV0aGVudGljYXRpb25TZXJ2ZXIiLCJhdWQiOiJKV1RTZXJ2aWNlUG9zdG1hbkNsaWVudCJ9.9Wy45JEuXHYlvF7dThp5uhIJGcrspcP27103x5H_ubk`,
+        },
+      });
+      console.log(data);
+    } catch (error) {
+      toast.error("Error Updating Role");
+      console.log(error);
+    }
+  };
 
   const handelDelete = async (id) => {};
 
   return (
-    <div className="container">
+    <div className="container" style={{ zIndex: 0 }}>
       <div className="crud shadow-lg border mb-5 mt-3 p-4 rounded ">
         <div className="row">
           <div className="col-sm-3 mt-5 mb-4 text-gred">
@@ -112,12 +145,12 @@ const Role = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => {
+                {data?.map((item, index) => {
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td>{item.role} </td>
-                      <td className="d-flex justify-content-center align-items-center">
+                      <td>{item.name} </td>
+                      <td className="d-flex justify-content-around align-items-center">
                         <Link
                           to="#"
                           className="view"
@@ -128,7 +161,7 @@ const Role = () => {
                         >
                           <i className="material-icons">&#xE417;</i>
                         </Link>
-                        &nbsp;
+                        {/* &nbsp; */}
                         <Link
                           to="#"
                           className="edit"
@@ -138,7 +171,7 @@ const Role = () => {
                         >
                           <i className="material-icons">&#xE254;</i>
                         </Link>
-                        &nbsp;
+                        {/* &nbsp; */}
                         <Link
                           to="#"
                           className="delete"
