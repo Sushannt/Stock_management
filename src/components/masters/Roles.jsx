@@ -36,9 +36,9 @@ const Roles = () => {
     };
 
     getRoles();
-  }, [token, data, setData]);
+  }, [token]);
 
-  //create role
+  // TODO: REACT_APP_AUTHTOKEN is temporary and must be removed later
   const handleSave = async (e) => {
     e.preventDefault();
     try {
@@ -63,29 +63,6 @@ const Roles = () => {
     }
   };
 
-  const handleView = (id) => {
-    const role = data.find((item) => item.id === id);
-    if (role) {
-      setId(id);
-      setRoleName(role.name);
-      setIsReadOnly(true);
-      setIsUpdate(false);
-      handleShow();
-    }
-  };
-
-  const handleEdit = (id) => {
-    const role = data.find((item) => item.id === id);
-    if (role) {
-      setId(id);
-      setRoleName(role.name);
-      setIsReadOnly(false);
-      setIsUpdate(true);
-      handleShow();
-    }
-  };
-
-  //update role
   const handelUpdate = async () => {
     try {
       const response = await axios.post(
@@ -106,7 +83,7 @@ const Roles = () => {
     }
   };
 
-  const handelDelete = async (id, name) => {
+  const handleDelete = async (id, name) => {
     try {
       const { data } = await axios.post(
         DELETE_ROLE,
@@ -130,7 +107,29 @@ const Roles = () => {
       toast.error("Error deleting role");
     }
   };
+  // TODO: REACT_APP_AUTHTOKEN is temporary and must be removed later
 
+  const handleView = (id) => {
+    const role = data.find((item) => item.id === id);
+    if (role) {
+      setId(id);
+      setRoleName(role.name);
+      setIsReadOnly(true);
+      setIsUpdate(false);
+      handleShow();
+    }
+  };
+
+  const handleEdit = (id) => {
+    const role = data.find((item) => item.id === id);
+    if (role) {
+      setId(id);
+      setRoleName(role.name);
+      setIsReadOnly(false);
+      setIsUpdate(true);
+      handleShow();
+    }
+  };
   return (
     <MasterContainer
       text={"Role"}
@@ -178,7 +177,7 @@ const Roles = () => {
                     className="delete"
                     title="Delete"
                     data-toggle="tooltip"
-                    onClick={() => handelDelete(item.id, item.name)}
+                    onClick={() => handleDelete(item.id, item.name)}
                     style={{ color: "red" }}
                   >
                     <i className="material-icons">&#xE872;</i>
