@@ -3,36 +3,14 @@ import { Button } from "react-bootstrap";
 import { useContext } from "react";
 import { MasterContext } from "../context/MasterContext";
 
-import ModalContainer from "./ModalContainer";
+// import ModalContainer from "./ModalContainer";
 
-const MasterContainer = ({
-  children,
-  text,
-  //   handleView,
-  //   handleEdit,
-  //   handelDelete,
-
-  //modal needs this
-  state,
-  setState,
-  //modal methods
-  handleSave,
-  handelUpdate,
-}) => {
+const MasterContainer = ({ children, text }) => {
   const {
-    //state variables
-    // data,
-    // isUpdate,
-    isReadOnly,
-    // show,
     // methods for edit, view, delete
     handleShow,
-    // handleClose,
   } = useContext(MasterContext);
 
-  const handleOnChange = (e) => {
-    setState(e.target.value);
-  };
   return (
     <div className="container">
       <div className="crud shadow-lg border mb-5 mt-3 p-4 rounded ">
@@ -63,92 +41,7 @@ const MasterContainer = ({
             </Button>
           </div>
         </div>
-        <div className="row">
-          <div className="table-responsive">{children}</div>
-        </div>
-
-        {/* Model Box */}
-        {/* <div className="model_box">
-          <Modal
-            show={show}
-            onHide={handleClose}
-            backdrop="static"
-            keyboard={false}
-          >
-            <Modal.Header closeButton>
-              {!isUpdate ? (
-                <Modal.Title>
-                  {isReadOnly ? `${text} details` : `Create ${text}`}
-                </Modal.Title>
-              ) : (
-                <Modal.Title>Edit {text}</Modal.Title>
-              )}
-            </Modal.Header>
-            <Modal.Body>
-              <form>
-                <div className="row">
-                  <div className="col">
-                    <label htmlFor={text} className="form-label">
-                      {text} Name<sup>*</sup>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder={`Enter ${text} name`}
-                      onChange={handleOnChange}
-                      value={state}
-                      readOnly={isReadOnly}
-                    />
-                  </div>
-                </div>
-              </form>
-            </Modal.Body>
-
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Cancel
-              </Button>
-              {!isReadOnly && (
-                <>
-                  {!isUpdate ? (
-                    <Button variant="success" onClick={handleSave}>
-                      Save {text}
-                    </Button>
-                  ) : (
-                    <Button variant="success" onClick={handelUpdate}>
-                      Update {text}
-                    </Button>
-                  )}
-                </>
-              )}
-            </Modal.Footer>
-          </Modal>
-        </div> */}
-
-        <ModalContainer
-          text={"Role"}
-          handelUpdate={handelUpdate}
-          handleSave={handleSave}
-        >
-          <form>
-            <div className="row">
-              <div className="col">
-                <label htmlFor={text} className="form-label">
-                  {text} Name<sup>*</sup>
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder={`Enter ${text} name`}
-                  onChange={handleOnChange}
-                  value={state}
-                  readOnly={isReadOnly}
-                />
-              </div>
-            </div>
-          </form>
-        </ModalContainer>
-        {/* Model Box Finish */}
+        {children}
       </div>
     </div>
   );

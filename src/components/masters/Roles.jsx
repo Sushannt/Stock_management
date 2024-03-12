@@ -6,6 +6,7 @@ import { MasterContext } from "../../context/MasterContext";
 import { GET_ROLES, ADD_ROLE, UPDATE_ROLE, DELETE_ROLE } from "../../constants";
 import { AuthContext } from "../../context/AuthContext";
 import MasterContainer from "../MasterContainer";
+import ModalContainer from "../ModalContainer";
 
 const Roles = () => {
   const { userInfo } = useContext(AuthContext);
@@ -15,7 +16,7 @@ const Roles = () => {
   const [id, setId] = useState(0);
   const [roleName, setRoleName] = useState("");
 
-  const { setIsUpdate, setIsReadOnly, setShow, handleShow } =
+  const { setIsUpdate, setIsReadOnly, isReadOnly, setShow, handleShow } =
     useContext(MasterContext);
 
   //getting roles from the api
@@ -37,7 +38,6 @@ const Roles = () => {
 
     getRoles();
   }, [token, data]);
-
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -108,7 +108,6 @@ const Roles = () => {
     }
   };
 
-
   const handleView = (id) => {
     const role = data.find((item) => item.id === id);
     if (role) {
@@ -130,64 +129,90 @@ const Roles = () => {
       handleShow();
     }
   };
+
+  const handleOnChange = (e) => {
+    setRoleName(e.target.value);
+  };
+
   return (
-    <MasterContainer
-      text={"Role"}
-      handelUpdate={handelUpdate}
-      handleSave={handleSave}
-      state={roleName}
-      setState={setRoleName}
-    >
-      <table className="table table-striped table-hover table-bordered text-center">
-        <thead>
-          <tr>
-            <th>Sl.</th>
-            <th>Role Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.map((item, index) => {
-            return (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{item.name} </td>
-                <td className="d-flex justify-content-center align-items-center">
-                  <Link
-                    to="#"
-                    className="view"
-                    title="View"
-                    data-toggle="tooltip"
-                    style={{ color: "#10ab80" }}
-                    onClick={() => handleView(item.id)}
-                  >
-                    <i className="material-icons">&#xE417;</i>
-                  </Link>
-                  <Link
-                    to="#"
-                    className="edit"
-                    title="Edit"
-                    data-toggle="tooltip"
-                    onClick={() => handleEdit(item.id)}
-                  >
-                    <i className="material-icons">&#xE254;</i>
-                  </Link>
-                  <Link
-                    to="#"
-                    className="delete"
-                    title="Delete"
-                    data-toggle="tooltip"
-                    onClick={() => handleDelete(item.id, item.name)}
-                    style={{ color: "red" }}
-                  >
-                    <i className="material-icons">&#xE872;</i>
-                  </Link>
-                </td>
+    <MasterContainer text={"Role"}>
+      <div className="row">
+        <div className="table-responsive">
+          <table className="table table-striped table-hover table-bordered text-center">
+            <thead>
+              <tr>
+                <th>Sl.</th>
+                <th>Role Name</th>
+                <th>Actions</th>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {data?.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{item.name} </td>
+                    <td className="d-flex justify-content-center align-items-center">
+                      <Link
+                        to="#"
+                        className="view"
+                        title="View"
+                        data-toggle="tooltip"
+                        style={{ color: "#10ab80" }}
+                        onClick={() => handleView(item.id)}
+                      >
+                        <i className="material-icons">&#xE417;</i>
+                      </Link>
+                      <Link
+                        to="#"
+                        className="edit"
+                        title="Edit"
+                        data-toggle="tooltip"
+                        onClick={() => handleEdit(item.id)}
+                      >
+                        <i className="material-icons">&#xE254;</i>
+                      </Link>
+                      <Link
+                        to="#"
+                        className="delete"
+                        title="Delete"
+                        data-toggle="tooltip"
+                        onClick={() => handleDelete(item.id, item.name)}
+                        style={{ color: "red" }}
+                      >
+                        <i className="material-icons">&#xE872;</i>
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <ModalContainer
+          text={"Role"}
+          handelUpdate={handelUpdate}
+          handleSave={handleSave}
+        >
+          <form>
+            <div className="row">
+              <div className="col">
+                <label htmlFor="role" className="form-label">
+                  Role Name<sup>*</sup>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder={`Enter Role name`}
+                  onChange={handleOnChange}
+                  value={roleName}
+                  readOnly={isReadOnly}
+                />
+              </div>
+            </div>
+          </form>
+        </ModalContainer>
+      </div>
     </MasterContainer>
   );
 };
