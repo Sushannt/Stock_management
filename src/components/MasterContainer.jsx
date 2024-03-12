@@ -1,7 +1,9 @@
-import { Button, Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 // import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { MasterContext } from "../context/MasterContext";
+
+import ModalContainer from "./ModalContainer";
 
 const MasterContainer = ({
   children,
@@ -20,12 +22,12 @@ const MasterContainer = ({
   const {
     //state variables
     // data,
-    isUpdate,
+    // isUpdate,
     isReadOnly,
-    show,
+    // show,
     // methods for edit, view, delete
     handleShow,
-    handleClose,
+    // handleClose,
   } = useContext(MasterContext);
 
   const handleOnChange = (e) => {
@@ -65,8 +67,8 @@ const MasterContainer = ({
           <div className="table-responsive">{children}</div>
         </div>
 
-        {/* <!--- Model Box ---> */}
-        <div className="model_box">
+        {/* Model Box */}
+        {/* <div className="model_box">
           <Modal
             show={show}
             onHide={handleClose}
@@ -121,9 +123,32 @@ const MasterContainer = ({
               )}
             </Modal.Footer>
           </Modal>
+        </div> */}
 
-          {/* Model Box Finish */}
-        </div>
+        <ModalContainer
+          text={"Role"}
+          handelUpdate={handelUpdate}
+          handleSave={handleSave}
+        >
+          <form>
+            <div className="row">
+              <div className="col">
+                <label htmlFor={text} className="form-label">
+                  {text} Name<sup>*</sup>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder={`Enter ${text} name`}
+                  onChange={handleOnChange}
+                  value={state}
+                  readOnly={isReadOnly}
+                />
+              </div>
+            </div>
+          </form>
+        </ModalContainer>
+        {/* Model Box Finish */}
       </div>
     </div>
   );
