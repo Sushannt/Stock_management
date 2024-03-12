@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 import { Form, Button, Spinner } from "react-bootstrap";
@@ -13,14 +13,21 @@ import loginSchema from "../helper/formValidation";
 import axios from "axios";
 import { LOGIN_URL } from "../constants";
 
-const FormComponent = () => {
-  const { setUserInfo } = useContext(AuthContext);
+const LoginForm = () => {
+  const { userInfo, setUserInfo } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(loginSchema),
   });
+
+  // if userInfo is there in context, user will get redirected to dashboard
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/dashboard");
+    }
+  }, [userInfo, navigate]);
 
   const onSubmit = async (data) => {
     try {
@@ -74,4 +81,4 @@ const FormComponent = () => {
   );
 };
 
-export default FormComponent;
+export default LoginForm;

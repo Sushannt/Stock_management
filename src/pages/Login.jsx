@@ -3,7 +3,7 @@ import warehouseImg from "../image/vecteezy_flat-isometric-illustration-concept-
 import keyImg from "../image/key-minimalistic-square-2-svgrepo-com.svg";
 import nagarNigam from "../image/nagarpalika.png";
 // components
-import FormComponent from "../components/FormComponent";
+import LoginForm from "../components/LoginForm";
 
 const Login = () => {
   return (
@@ -34,7 +34,7 @@ const Login = () => {
                 className="w-75 align-self-center "
               />
               <h1 className="mb-xs-3 mb-md-3 mt-2 text-center">Login</h1>
-              <FormComponent />
+              <LoginForm />
             </div>
           </Col>
         </Row>
