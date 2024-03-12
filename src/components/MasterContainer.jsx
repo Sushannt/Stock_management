@@ -31,9 +31,9 @@ const MasterContainer = ({ children, text }) => {
             className="col-sm-3 offset-sm-2 mt-5 mb-4 text-gred"
             style={{ color: "green" }}
           >
-            <h2>
+            <h5>
               <b>{text} Details</b>
-            </h2>
+            </h5>
           </div>
           <div className="col-sm-3 offset-sm-1  mt-5 mb-4 text-gred pl">
             <Button variant="primary" onClick={handleShow}>

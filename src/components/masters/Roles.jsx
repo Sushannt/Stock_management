@@ -25,7 +25,7 @@ const Roles = () => {
       try {
         const { data: response } = await axios.get(GET_ROLES, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
           },
         });
 
@@ -49,7 +49,7 @@ const Roles = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
           },
         }
       );
@@ -70,7 +70,7 @@ const Roles = () => {
         { roleId: id, roleName },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
           },
         }
       );
@@ -93,7 +93,7 @@ const Roles = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
           },
         }
       );
