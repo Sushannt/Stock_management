@@ -36,9 +36,9 @@ const Roles = () => {
     };
 
     getRoles();
-  }, [token]);
+  }, [token, data]);
 
-  // TODO: REACT_APP_AUTHTOKEN is temporary and must be removed later
+
   const handleSave = async (e) => {
     e.preventDefault();
     try {
@@ -49,7 +49,7 @@ const Roles = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -70,7 +70,7 @@ const Roles = () => {
         { roleId: id, roleName },
         {
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -93,7 +93,7 @@ const Roles = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -107,7 +107,7 @@ const Roles = () => {
       toast.error("Error deleting role");
     }
   };
-  // TODO: REACT_APP_AUTHTOKEN is temporary and must be removed later
+
 
   const handleView = (id) => {
     const role = data.find((item) => item.id === id);

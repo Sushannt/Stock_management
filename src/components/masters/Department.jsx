@@ -33,6 +33,7 @@ const Department = () => {
           <tr>
             <th>Sl.</th>
             <th>Role Name</th>
+            <th>Description</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -42,6 +43,7 @@ const Department = () => {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.name} </td>
+                <td>{item.description}</td>
                 <td className="d-flex justify-content-center align-items-center">
                   <Link
                     to="#"
