@@ -4,7 +4,6 @@ import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 // context
-import { AuthContextProvider } from "./context/AuthContext";
 import { MasterContextProvider } from "./context/MasterContext";
 
 //protect route
@@ -17,20 +16,18 @@ import Error404 from "./pages/Error404";
 
 const App = () => {
   return (
-    <AuthContextProvider>
-      <MasterContextProvider>
-        <div>
-          <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="" element={<ProtectRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Route>
-            <Route path="*" element={<Error404 />} />
-          </Routes>
-        </div>
-      </MasterContextProvider>
-    </AuthContextProvider>
+    <MasterContextProvider>
+      <div>
+        <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="" element={<ProtectRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+      </div>
+    </MasterContextProvider>
   );
 };
 
