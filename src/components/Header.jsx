@@ -6,7 +6,7 @@ import logo from "../image/nagar-nigam.jpg";
 import useAuth from "../hooks/useAuth";
 
 function Header() {
-  const { logout } = useAuth();
+  const { auth, logout } = useAuth();
 
   return (
     <div className="dashboard-header bg-light" style={{ zIndex: 10 }}>
@@ -109,7 +109,9 @@ function Header() {
                 aria-labelledby="navbarDropdownMenuLink2"
               >
                 <div className="nav-user-info">
-                  <h5 className="mb-0 text-white nav-user-name">Saurav </h5>
+                  <h5 className="mb-0 text-white nav-user-name">
+                    {auth?.result?.userName}
+                  </h5>
                   <span className="status"></span>
                   <span className="ml-2">Available</span>
                 </div>
