@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../image/nagar-nigam.jpg";
+
+// context
+import useAuth from "../hooks/useAuth";
+
 function Header() {
+  const { logout } = useAuth();
+
   return (
     <div className="dashboard-header bg-light" style={{ zIndex: 10 }}>
       <nav className="navbar navbar-expand-lg bg-light-gray fixed-top">
@@ -114,7 +120,9 @@ function Header() {
                   <i className="fas fa-cog mr-2"></i>Setting
                 </Link>
                 <Link to="/" className="dropdown-item">
-                  <i className="fas fa-power-off mr-2"></i>Logout
+                  <button onClick={logout}>
+                    <i className="fas fa-power-off mr-2"></i>Logout
+                  </button>
                 </Link>
               </div>
             </li>
