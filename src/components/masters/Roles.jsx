@@ -4,13 +4,13 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { MasterContext } from "../../context/MasterContext";
 import { GET_ROLES, ADD_ROLE, UPDATE_ROLE, DELETE_ROLE } from "../../constants";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthProvider";
 import MasterContainer from "../MasterContainer";
 import ModalContainer from "../ModalContainer";
 
 const Roles = () => {
-  const { userInfo } = useContext(AuthContext);
-  const token = userInfo?.result?.token;
+  const { auth } = useContext(AuthContext);
+  const token = auth?.result?.token;
 
   const [data, setData] = useState([]);
   const [id, setId] = useState(0);
@@ -25,13 +25,17 @@ const Roles = () => {
       try {
         const { data: response } = await axios.get(GET_ROLES, {
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
+        if (!response.isSuccess) {
+          toast.error(response?.errorMessage);
+        }
+
         setData(response.result);
       } catch (error) {
-        toast.error("Error fetching roles");
+        toast.error("Error fetching roles", error);
         console.error(error);
       }
     };
@@ -49,7 +53,7 @@ const Roles = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -70,7 +74,7 @@ const Roles = () => {
         { roleId: id, roleName },
         {
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -93,7 +97,7 @@ const Roles = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_AUTHTOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );

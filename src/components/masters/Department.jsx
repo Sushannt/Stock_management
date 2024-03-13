@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { MasterContext } from "../../context/MasterContext";
-import {  ADD_DEPARTMENT , GET_DEPARTMENT} from "../../constants";
-import { AuthContext } from "../../context/AuthContext";
+import { ADD_DEPARTMENT, GET_DEPARTMENT } from "../../constants";
+import { AuthContext } from "../../context/AuthProvider";
 import MasterContainer from "../MasterContainer";
 import ModalContainer from "../ModalContainer";
 
 const Roles = () => {
-  const { userInfo } = useContext(AuthContext);
-  const token = userInfo?.result?.token;
+  const { auth } = useContext(AuthContext);
+  const token = auth?.result?.token;
 
   const [data, setData] = useState([]);
   const [id, setId] = useState(0);
@@ -22,7 +22,7 @@ const Roles = () => {
 
   //getting department from the api
   useEffect(() => {
-    const getDeparntment = async () => {
+    const getDepartment = async () => {
       try {
         const { data: response } = await axios.get(GET_DEPARTMENT, {
           headers: {
@@ -37,11 +37,8 @@ const Roles = () => {
       }
     };
 
-    getDeparntment();
+    getDepartment();
   }, [token, data]);
-
-
-
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -50,7 +47,7 @@ const Roles = () => {
         ADD_DEPARTMENT,
         {
           departmentName,
-          description
+          description,
         },
         {
           headers: {
@@ -68,20 +65,16 @@ const Roles = () => {
     }
   };
 
-  const handelUpdate = async () => {
-   
-  };
+  const handelUpdate = async () => {};
 
-  const handleDelete = async (id, name) => {
-
-  };
+  const handleDelete = async (id, name) => {};
 
   const handleView = (id) => {
     const desc = data.find((item) => item.id === id);
     if (desc) {
       setId(id);
       setDepartmentName(desc.departmentName);
-      setDescription(desc.description)
+      setDescription(desc.description);
       setIsReadOnly(true);
       setIsUpdate(false);
       handleShow();
@@ -93,7 +86,7 @@ const Roles = () => {
     if (desc) {
       setId(id);
       setDepartmentName(desc.departmentName);
-      setDescription(desc.description)
+      setDescription(desc.description);
       setIsReadOnly(false);
       setIsUpdate(true);
       handleShow();
@@ -167,13 +160,13 @@ const Roles = () => {
             <div className="row">
               <div className="col">
                 <label htmlFor="" className="form-label">
-                Department Name<sup>*</sup>
+                  Department Name<sup>*</sup>
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   placeholder={`Enter Role name`}
-                  onChange={(e) =>  setDepartmentName(e.target.value)}
+                  onChange={(e) => setDepartmentName(e.target.value)}
                   value={departmentName}
                   readOnly={isReadOnly}
                 />

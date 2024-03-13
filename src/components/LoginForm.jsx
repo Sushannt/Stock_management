@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useEffect, useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 import { Form, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,8 @@ import axios from "axios";
 import { LOGIN_URL } from "../constants";
 
 const LoginForm = () => {
-  const { userInfo, setUserInfo } = useContext(AuthContext);
+  let { auth, login } = useAuth();
+
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -24,17 +25,18 @@ const LoginForm = () => {
 
   // if userInfo is there in context, user will get redirected to dashboard
   useEffect(() => {
-    if (userInfo) {
+    console.log("auth after login", auth);
+    if (auth) {
       navigate("/dashboard");
     }
-  }, [userInfo, navigate]);
+  }, [auth, navigate]);
 
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
       const { data: userData } = await axios.post(LOGIN_URL, data);
       if (userData?.isSuccess) {
-        setUserInfo(userData);
+        login({ ...userData });
         navigate("/dashboard");
       } else {
         toast.error(userData?.errorMessage);
