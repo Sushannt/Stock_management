@@ -1,12 +1,16 @@
 import { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import axios from "axios";
 import { MasterContext } from "../../context/MasterContext";
-import { GET_ROLES, ADD_ROLE, UPDATE_ROLE, DELETE_ROLE } from "../../constants";
 import { AuthContext } from "../../context/AuthProvider";
 import MasterContainer from "../MasterContainer";
 import ModalContainer from "../ModalContainer";
+import {
+  fetchRoles,
+  addNewRole,
+  updateRole,
+  deleteRole,
+} from "../../services/roles.api";
 
 const Roles = () => {
   const { auth } = useContext(AuthContext);
@@ -23,92 +27,51 @@ const Roles = () => {
   useEffect(() => {
     const getRoles = async () => {
       try {
-        const { data: response } = await axios.get(GET_ROLES, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.isSuccess) {
-          toast.error(response?.errorMessage);
-        }
-
-        setData(response.result);
+        const roles = await fetchRoles(token);
+        setData(roles);
       } catch (error) {
-        toast.error("Error fetching roles", error);
-        console.error(error);
+        toast.error(error?.message || "Something went wrong, please try again");
       }
     };
 
     getRoles();
-  }, [token, data]);
+  }, [token]);
 
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        ADD_ROLE,
-        {
-          roleName,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setData([...data, response.data.result.roleName]);
-      console.log("response...", response.data.result.roleName);
-      toast.success("Role saved successfully");
+      const response = await addNewRole(token, roleName);
+      // setData([...data, response.roleName]);
+      const roles = await fetchRoles(token);
+      setData(roles);
+      toast.success(response?.message || response);
       setShow(false);
     } catch (error) {
-      console.error("Error saving role:", error);
-      toast.error("Error saving role");
+      toast.error(error?.message || "Something went wrong, please try again");
     }
   };
 
   const handelUpdate = async () => {
     try {
-      const response = await axios.post(
-        UPDATE_ROLE,
-        { roleId: id, roleName },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response.data);
-      toast.success("Role updated successfully");
+      const response = await updateRole(token, id, roleName);
+      const roles = await fetchRoles(token);
+      setData(roles);
+      toast.success(response?.message);
       setShow(false);
     } catch (error) {
-      console.error("Error updating role:", error);
-      toast.error("Error updating role");
+      toast.error(error?.message || "Something went wrong, please try again");
     }
   };
 
   const handleDelete = async (id, name) => {
     try {
-      const { data } = await axios.post(
-        DELETE_ROLE,
-        {
-          roleId: id,
-          roleName: name,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (data?.isSuccess) {
-        toast.success("Role Deleted Successfully");
-      }
+      const response = await deleteRole(token, id, name);
+      const roles = await fetchRoles(token);
+      setData(roles);
+      toast.success(response.message);
       setShow(false);
     } catch (error) {
-      console.error(error);
-      toast.error("Error deleting role");
+      toast.error(error?.message || "Something went wrong, please try again");
     }
   };
 
