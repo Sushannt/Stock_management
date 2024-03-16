@@ -1,7 +1,9 @@
 import { Row, Col, Container, Image } from "react-bootstrap";
-import warehouseImg from "../image/vecteezy_flat-isometric-illustration-concept-warehouse-and-delivery_7885573.jpg";
+// import warehouseImg from "../image/vecteezy_flat-isometric-illustration-concept-warehouse-and-delivery_7885573.jpg";
+import nagarPalika from "../image/nagar-nigam.jpg";
 import keyImg from "../image/key-minimalistic-square-2-svgrepo-com.svg";
-import nagarNigam from "../image/nagarpalika.png";
+import nagarNigamtext from "../image/nagarpalika.png";
+// import bgm from "../image/map-nagar-palika.jpg";
 // components
 import LoginForm from "../components/LoginForm";
 
@@ -9,9 +11,28 @@ const Login = () => {
   return (
     <section>
       <Container fluid>
-        <Row style={{ minHeight: "100vh" }}>
-          <Col xs={12} md={7} className="d-none d-md-flex align-items-center">
-            <Image src={warehouseImg} fluid className="h-100" rounded />
+        <Row
+          style={{
+            minHeight: "100vh",
+          }}
+        >
+          <Col
+            xs={12}
+            md={7}
+            className="d-none d-md-flex flex-column  align-items-center justify-content-center"
+            // style={{
+            //   backgroundImage: `url(${bgm})`,
+            //   backgroundRepeat: "no-repeat",
+            //   backgroundPosition: "bottom",
+            //   backgroundSize: "contain",
+            // }}
+          >
+            <Image src={nagarPalika} fluid className="h-50" rounded />
+            {/* <Row>
+              <Col className="py-4">
+                <h1>By UP Government</h1>
+              </Col>
+            </Row> */}
           </Col>
           <Col
             xs={12}
@@ -29,7 +50,7 @@ const Login = () => {
                 }}
               />
               <Image
-                src={nagarNigam}
+                src={nagarNigamtext}
                 fluid
                 className="w-75 align-self-center "
               />

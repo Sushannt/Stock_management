@@ -9,12 +9,12 @@ const Dashboard = () => {
       <div>
         <Header />
       </div>
-      <div>
+      <aside>
         <Sidebar />
-      </div>
-      <div>
+      </aside>
+      <main className="mt-5">
         <Outlet />
-      </div>
+      </main>
     </div>
   );
 };

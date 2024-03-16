@@ -1,9 +1,6 @@
 import { Button } from "react-bootstrap";
-// import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { MasterContext } from "../context/MasterContext";
-
-// import ModalContainer from "./ModalContainer";
 
 const MasterContainer = ({ children, text }) => {
   const {

@@ -82,7 +82,7 @@ function Sidebar() {
                     data-target="#submenu-2"
                     aria-controls="submenu-2"
                   >
-                    <i className="fa fa-fw fa-rocket"></i>Input Form
+                    <i className="fa fa-fw fa-rocket"></i>Manage Stock
                   </Link>
                   <div id="submenu-2" className="collapse submenu">
                     <div className="nav flex-column">
@@ -92,14 +92,14 @@ function Sidebar() {
                           key={index}
                           onClick={() => clickHandler2(index)}
                         >
-                          <span
+                          <p
                             onClick={() => setActiveNavIndex1(index)}
                             className={
                               activeNavIndex1 === index ? "current" : "default"
                             }
                           >
                             {item.label}
-                          </span>
+                          </p>
                         </p>
                       ))}
                     </div>

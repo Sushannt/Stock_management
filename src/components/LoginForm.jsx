@@ -25,7 +25,6 @@ const LoginForm = () => {
 
   // if userInfo is there in context, user will get redirected to dashboard
   useEffect(() => {
-    console.log("auth after login", auth);
     if (auth) {
       navigate("/dashboard");
     }
