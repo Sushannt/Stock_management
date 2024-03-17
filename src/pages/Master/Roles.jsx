@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { MasterContext } from "../../context/MasterContext";
 import { AuthContext } from "../../context/AuthProvider";
-import MasterContainer from "../MasterContainer";
-import ModalContainer from "../ModalContainer";
+import MasterContainer from "../../components/MasterContainer";
+import ModalContainer from "../../components/ModalContainer";
 import {
   fetchRoles,
   addNewRole,

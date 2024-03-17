@@ -5,8 +5,8 @@ import axios from "axios";
 import { MasterContext } from "../../context/MasterContext";
 import { EDIT_DEPARTMENT, DELETE_DEPARTMENT } from "../../constants";
 import { AuthContext } from "../../context/AuthProvider";
-import MasterContainer from "../MasterContainer";
-import ModalContainer from "../ModalContainer";
+import MasterContainer from "../../components/MasterContainer";
+import ModalContainer from "../../components/ModalContainer";
 import {
   addNewDepartment,
   fetchDepartments,
