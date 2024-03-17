@@ -5,7 +5,7 @@ import Issue from "../../components/Manage_Stock/Issue";
 import Receive from "../../components/Manage_Stock/Receive";
 import Return from "../../components/Manage_Stock/Return";
 
-const DASHBOARD_SIDEBAR_LINKS = [
+export const MasterMenu = [
   {
     key: "user",
     path: "/",
@@ -20,7 +20,7 @@ const DASHBOARD_SIDEBAR_LINKS = [
   },
 ];
 
-const DASHBOARD_SIDEBAR_LINKS2 = [
+export const ManageStockMenu = [
   {
     key: "form",
     path: "/",
@@ -46,4 +46,3 @@ const DASHBOARD_SIDEBAR_LINKS2 = [
     content: <Return />,
   },
 ];
-export { DASHBOARD_SIDEBAR_LINKS, DASHBOARD_SIDEBAR_LINKS2 };

@@ -1,127 +1,76 @@
-import {
-  DASHBOARD_SIDEBAR_LINKS,
-  DASHBOARD_SIDEBAR_LINKS2,
-} from "../lib/consts/Navigation";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-function Sidebar() {
-  const [activeTab, setActiveTab] = useState(0);
-  const [activeNavIndex1, setActiveNavIndex1] = useState(0);
-  const [activeNavIndex2, setActiveNavIndex2] = useState(0);
+import { MenuList, MenuItem, Box, Typography } from "@mui/material";
+import { NavLink } from "react-router-dom";
+import AccordionComponent from "./Accordion";
 
-  const clickHandler1 = (index) => {
-    setActiveTab(0);
-    setActiveNavIndex1(index);
-  };
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 
-  const clickHandler2 = (index) => {
-    setActiveTab(1);
-    setActiveNavIndex2(index);
-  };
+const Sidebar = () => {
   return (
-    <div className="dashboard-main-wrapper">
-      <div className="nav-left-sidebar sidebar-dark">
-        <div className="menu-list">
-          <nav className="navbar navbar-expand-lg navbar-light">
-            <Link to="#" className="d-xl-none d-lg-none">
-              Dashboard
-            </Link>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav flex-column">
-                <li className="nav-divider">Menu</li>
-                <li className="nav-item ">
-                  <Link
-                    className="nav-link active"
-                    to="#"
-                    data-toggle="collapse"
-                    aria-expanded="false"
-                    data-target="#submenu-1"
-                    aria-controls="submenu-1"
-                  >
-                    <i className="fa fa-fw fa-user-circle"></i>Masters{" "}
-                    <span className="badge badge-success">6</span>
-                  </Link>
-                  <div id="submenu-1" className="collapse submenu">
-                    <div className="nav flex-column">
-                      {DASHBOARD_SIDEBAR_LINKS.map((item, index) => (
-                        <span
-                          className="nav-item nav-link"
-                          key={index}
-                          onClick={() => clickHandler1(index)}
-                        >
-                          <span
-                            onClick={() => setActiveNavIndex1(index)}
-                            className={
-                              activeNavIndex1 === index ? "current" : "default"
-                            }
-                          >
-                            {item.label}
-                          </span>
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className="nav-link"
-                    to="#"
-                    data-toggle="collapse"
-                    aria-expanded="false"
-                    data-target="#submenu-2"
-                    aria-controls="submenu-2"
-                  >
-                    <i className="fa fa-fw fa-rocket"></i>Manage Stock
-                  </Link>
-                  <div id="submenu-2" className="collapse submenu">
-                    <div className="nav flex-column">
-                      {DASHBOARD_SIDEBAR_LINKS2.map((item, index) => (
-                        <p
-                          className="nav-item nav-link"
-                          key={index}
-                          onClick={() => clickHandler2(index)}
-                        >
-                          <p
-                            onClick={() => setActiveNavIndex1(index)}
-                            className={
-                              activeNavIndex1 === index ? "current" : "default"
-                            }
-                          >
-                            {item.label}
-                          </p>
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-      </div>
-      <div className="dashboard-wrapper">
-        <div className="row m-l-20">
-          <div className="col">
-            {activeTab === 0 &&
-              DASHBOARD_SIDEBAR_LINKS[activeNavIndex1].content}
-            {activeTab === 1 &&
-              DASHBOARD_SIDEBAR_LINKS2[activeNavIndex2].content}
-          </div>
-        </div>
-      </div>
-    </div>
+    <Box
+      className="shadow-sm h-100"
+      sx={{ bgcolor: "primary.dark", color: "white" }}
+    >
+      <MenuList className="d-flex align-items-center ml-2">
+        <AnalyticsIcon
+          className="my-auto ml-2"
+          fontSize="small"
+          color="white"
+        />
+        <NavLink to="/dashboard" className={"text-white text-decoration-none "}>
+          <MenuItem>
+            <Typography>Dashboard</Typography>
+          </MenuItem>
+        </NavLink>
+      </MenuList>
+      <AccordionComponent
+        title={"Masters"}
+        icon={
+          <AccountCircleIcon
+            className="my-auto mr-3"
+            fontSize="small"
+            color="white"
+          />
+        }
+      >
+        <MenuList sx={{ margin: "0 auto" }}>
+          <NavLink to="/role" className={"text-white text-decoration-none "}>
+            <MenuItem>
+              <Typography sx={{ textTransform: "uppercase" }}> Role</Typography>
+            </MenuItem>
+          </NavLink>
+          <NavLink
+            to="/department"
+            className={"text-white text-decoration-none "}
+          >
+            <MenuItem>
+              <Typography sx={{ textTransform: "uppercase" }}>
+                Department
+              </Typography>
+            </MenuItem>
+          </NavLink>
+        </MenuList>
+      </AccordionComponent>
+      <AccordionComponent
+        title={"Manage Stock"}
+        icon={
+          <Inventory2Icon
+            className="my-auto mr-3"
+            fontSize="small"
+            color="white"
+          />
+        }
+      >
+        <MenuList sx={{ margin: "0 auto" }}>
+          <MenuItem>Add/Remove</MenuItem>
+          <MenuItem>Issue</MenuItem>
+          <MenuItem>Receive</MenuItem>
+          <MenuItem>Return</MenuItem>
+        </MenuList>
+      </AccordionComponent>
+    </Box>
   );
-}
+};
 
 export default Sidebar;
